@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>My Tasks</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Tasks</h3>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-4>
+        <ion-list *ngFor="let todo of todolist">
+          <ion-item>{{todo.title}}</ion-item>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
+</ion-content>
