@@ -8,9 +8,7 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Tasks</h3>
-
-  <ion-grid>
+   <ion-grid>
     <ion-row>
       <ion-col col-4>
         <ion-list *ngFor="let todo of todolist">
@@ -18,6 +16,19 @@
         </ion-list>
 
       </ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col col-2>
+        <ion-input #tasktitle placeholder="enter todo task" ></ion-input>
+      </ion-col>
+
+       <ion-col col-1>
+         <button ion-button (click)="save(tasktitle.value)" value="Save">
+               <ion-icon name="Save">Save</ion-icon>
+         </button>
+      </ion-col>
+
     </ion-row>
   </ion-grid>
 

@@ -4,6 +4,8 @@ import { MyApp } from './app.component';
 import { Page1 } from '../pages/page1/page1';
 import { Page2 } from '../pages/page2/page2';
 import { TodoListPage } from '../pages/todo/todolistpage';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import {TodosService} from "../pages/todo/todosservice";
 
 //import { TodoListPage } from '../pages/todo/todolistcomponent';
 
@@ -24,6 +26,6 @@ import { TodoListPage } from '../pages/todo/todolistpage';
     Page2
    ,TodoListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},SQLite,TodosService]
 })
 export class AppModule {}
