@@ -1,5 +1,5 @@
 
-import {Component} from '@angular/core';
+import {Component,Input} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import {todoItem} from './todoitem';
@@ -12,14 +12,16 @@ import {TodosService} from './todosservice';
     templateUrl : 'todolist.html'
 })
 export class TodoListPage {
-    todolist : todoItem[] =[];
+    @Input() todolist : todoItem[] =[];
+    
     
     constructor(public navCtrl:NavController,public platform: Platform,public todoservice:TodosService){
             var item = new  todoItem();
             item.title="Task 1";
             this.todolist.push(item);
             //this.initializeApp();
-            this.loadfronPouch();
+            //this.loadfronPouch();
+            this.loadfronPouchnew();
            
     }
     loadfronPouch(){
@@ -42,5 +44,6 @@ export class TodoListPage {
         let item = new todoItem();
         item.title=tasktitle;
        this.todoservice.createtodos(item);
+        this.loadfronPouchnew();
     }
 }
