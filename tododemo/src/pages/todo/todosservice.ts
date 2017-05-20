@@ -32,11 +32,17 @@ export class TodosService {
   }
 
   gettodosnew():Observable<todoItem[]>{
-      return this.db.allDocs({include_docs:true})
-             .map((res:Response)=>{
-               <todoItem[]>res.json()
-             })
-             .catch((error:any)=>Observable.throw(error.json()));
+    this.data = [];
+      return new Observable(observer=>{
+         this.db.allDocs({ include_docs: true })
+         .then((result)=>{
+            
+            let docs = result.rows.map((row) => {
+            this.data.push(row.doc);
+          });
+          observer.next(this.data);
+         });
+      });
   }
 
   gettodos() {
@@ -55,7 +61,7 @@ export class TodosService {
           resolve(this.data);
 
           this.db.changes({ live: true, since: 'now', include_docs: true }).on('change', (change) => {
-            //this.handleChange(change);
+            this.handleChange();
           });
 
 
@@ -64,8 +70,13 @@ export class TodosService {
         });
     });
   }
-
+  
+  handleChange(){
+    
+  }
   createtodos(todoItem:todoItem) {
+   // console.log("adding" + todoItem);
+    todoItem.status = 0;
     this.db.post(todoItem);
   }
 

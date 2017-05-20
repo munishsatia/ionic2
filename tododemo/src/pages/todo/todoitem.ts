@@ -1,4 +1,5 @@
 export class todoItem{
     title : string;
-    status : boolean;
+    status : number;
+    checked : boolean;
 }

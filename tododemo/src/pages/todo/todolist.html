@@ -7,18 +7,37 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding >
    <ion-grid>
     <ion-row>
       <ion-col col-4>
-        <ion-list *ngFor="let todo of todolist">
-          <ion-item>{{todo.title}}</ion-item>
-        </ion-list>
+      
+<div id="myDIV" class="headertodo">
+  <h2 style="color: white">My To Do List</h2>
+ <input type="text"  #tasktitle  placeholder="Title..." />
+ <!--<ion-input id="myInput" type="text" class="titleinput" #tasktitle placeholder="enter todo task" ></ion-input>-->
+  <span (click)="save(tasktitle.value)" class="addBtn">Add</span>
+</div>
 
-      </ion-col>
+<ul id="myUL" >
+  <li *ngFor="let todo of todolist">
+  <!--<template  ngFor #todo [ngForOf]="todolist">
+    <li>-->
+    <div style="width:10%; "> <input type="checkbox" [checked]="todo.checked"/></div>
+    <div style="text-align: left">{{todo.title}}</div>   
+  </li> 
+  <!--</template>-->
+</ul>
+
+<!--<ul id="myUL" >
+   <ion-list>
+   <li *ngFor="let todo of todolist"><ion-item>{{todo.title}}</ion-item></li> 
+  </ion-list>
+</ul>-->
+ </ion-col>
 
     </ion-row>
-    <ion-row>
+    <!--<ion-row>
       <ion-col col-2>
         <ion-input #tasktitle placeholder="enter todo task" ></ion-input>
       </ion-col>
@@ -29,11 +48,7 @@
          </button>
       </ion-col>
 
-    </ion-row>
+    </ion-row>   -->
   </ion-grid>
-
-
-
-
   <!--<button ion-button secondary menuToggle>Toggle Menu</button>-->
 </ion-content>
