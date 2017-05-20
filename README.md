@@ -1,4 +1,4 @@
-# ionic2 Apps
+# ionic Apps
 
 ## Todoapp 
 Sample App with Local Storage using PouchDB/CouchDB
