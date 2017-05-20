@@ -1,3 +1,4 @@
-# ionic2
+# ionic2 Apps
 
-Ionic 2 Sample App with Local Storage using PouchDB/CouchDB
+- Todoapp -  Sample App with Local Storage using PouchDB/CouchDB
+- Beacon App eddystone - Sample App on BLE with eddystone bluetooth beacon
