@@ -10,8 +10,11 @@
 <ion-content padding>
   <h3>Bluetooth Beacon App</h3>
 
+  <button ion-button (click)="startscan()"> Start Scan </button>
+  <button ion-button (click)="stopscan()"> Stop Scan </button>
  
 
-  <p>Status : {{message}}</p>
-  <button ion-button (click)="startscan()"> Start Scan </button>
+  <p>Status : {{status}}</p>
+  <p>Beacons Details</p>
+  <span [innerHTML]="message">  </span>
 </ion-content>
