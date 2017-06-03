@@ -9,21 +9,23 @@ declare var evothings;
 })
 export class HomePage {
  
-  public message : string;
+  public message : string ="";
+  public status : string;
   public beacons = {};
   public timer;
+  public timerscanner;
   constructor(public navCtrl: NavController, public plt:Platform) {
       this.message = "Not Started";
       plt.ready().then(()=> {
          // setTimeout(this.startscan, 500);
-         this.message += "...Platform Ready";
+         this.status += "...Platform Ready";
 
           if (<any>evothings.eddystone){
-            this.message += "...scanning started...";
+            this.status  += "...scanning started...";
            // evothings.eddystone.startScan(this.success,this.error);
-           this.startscan();
+          // this.startscan();
             setTimeout(function() {
-               this.message += "...scanning started...";
+               this.status  += "...scanning...";
               //evothings.eddystone.startScan(this.success,this.error);
               this.startscan();
             }, 1000);
@@ -36,15 +38,14 @@ export class HomePage {
             }, 3000);
           }
           else{
-            this.message += "-evothings.eddystone  not found...";
+            this.message += "- beacons library (eddystone) not loaded...";
           }
         });
   }
 
  
   startscan(){
-    // this.message += "... startscan button clicjed ...";
-     //evothings.eddystone.startScan(this.success,this.error);
+     this.status  = "...scanning...";
      evothings.eddystone.startScan((beacon)=>
      {
         beacon.timeStamp = Date.now();
@@ -61,8 +62,14 @@ export class HomePage {
   //     console.log(beacon);
   // }
 
+  stopscan(){
+     this.status  = "...scanning stopped...";
+    evothings.eddystone.stopScan();
+  }
   displayBeacons(){
-     this.message += "...update...";
+  
+   this.message += "...refreshing beacons...";
+   this.removeOldBeacons();
     var html = '';
     var list = this.getbeaconList(this.beacons);
    // console.log(list);
@@ -70,16 +77,67 @@ export class HomePage {
       var beacon = list[i];
       var htmlbeacon = '<p>'
                         + this.htmlBeaconName(beacon)
+                        + this.htmlBeaconURL(beacon)
+                        + this.htmlBeaconNID(beacon)
+                        + this.htmlBeaconBID(beacon)
                         + '</p>';
 				html += htmlbeacon;
     }
     this.message = html;
+  }
+  removeOldBeacons()
+  {
+    var timeNow = Date.now();
+    for (var key in this.beacons)
+    {
+      // Only show beacons updated during the last 60 seconds.
+      var beacon = this.beacons[key];
+      if (beacon.timeStamp + 2000 < timeNow)
+      {
+        delete this.beacons[key];
+      }
+    }
   }
   htmlBeaconName(beacon)
 	{
 			var name = beacon.name || 'no name';
 			return '<strong>' + name + '</strong><br/>';
 	}
+
+  htmlBeaconURL(beacon)
+		{
+			return beacon.url ?
+				'URL: ' + beacon.url + '<br/>' :  '';
+		}
+
+		htmlBeaconNID(beacon)
+		{
+			return beacon.nid ?
+				'NID: ' + this.uint8ArrayToString(beacon.nid) + '<br/>' :  '';
+		}
+
+		htmlBeaconBID(beacon)
+		{
+			return beacon.bid ?
+				'BID: ' + this.uint8ArrayToString(beacon.bid) + '<br/>' :  '';
+		}
+
+    uint8ArrayToString(uint8Array)
+		{
+			function format(x)
+			{
+				var hex = x.toString(16);
+				return hex.length < 2 ? '0' + hex : hex;
+			}
+
+			var result = '';
+			for (var i = 0; i < uint8Array.length; ++i)
+			{
+				result += format(uint8Array[i]) + ' ';
+			}
+			return result;
+		}
+
 
   getbeaconList(beacons : any){
       var list = [];
